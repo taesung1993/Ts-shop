@@ -7,26 +7,36 @@ const Container = styled.header`
 `;
 
 const Inner = styled.div`
-<<<<<<< HEAD
     height: 50px;
     border-bottom: 1px solid ${colors.lineColor};
-=======
-    height: 100px;
-    display: grid;
-    grid-template-columns: 1fr 100px 1fr;
->>>>>>> 93024e478de65c7213db791f4f0174e7e453db35
 `; 
 
-const InnerCol = styled.div`
-    align-self: center;
-    justify-self: ${({order}) => order === "second" ? "center" : 
-                                 order === "last" ? "end" : "start"};
+const LogoContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px;
+    border-bottom: 1px solid ${colors.lineColor};
 `;
 
 const Logo = styled.img`
-    width: 80px;
-    height: 80px;
-`
+    width: 120px;
+    height: 120px;
+`;
+
+const TabMenu = styled.div`
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid ${colors.lineColor};
+    padding: 0 20%;
+    display: grid;
+    grid-template-columns: ${(props) => `repeat(${props.menuLen}, 1fr)`};
+`;
+
+const MenuItem = styled(Link)`
+    justify-self: center;
+    align-self: center;
+`;
 
 
 const menus = [
@@ -63,17 +73,15 @@ const menus = [
 const Header = () => {
     return (
         <Container>
-            <Inner>
-                <InnerCol>
-                <div>FIRST</div>
-                </InnerCol>
-                <InnerCol order={"second"}>
-                    <Logo src={'/images/logo/logo.png'}/>
-                </InnerCol>
-                <InnerCol order={"last"}>
-                    <div>LAST</div>
-                </InnerCol>
-            </Inner>
+            <Inner></Inner>
+            <LogoContainer>
+                <Logo src={'/images/logo/logo.png'}/>
+            </LogoContainer>
+            <TabMenu menuLen={menus.length}>
+                {
+                    menus.map(({name, path}, idx) => <MenuItem key={name+idx} to={path}>{name}</MenuItem>)
+                }
+            </TabMenu>
         </Container>
     )
 }
