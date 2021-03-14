@@ -8,7 +8,7 @@ const Container = styled.header`
 
 const Inner = styled.div`
     height: 50px;
-    background-color: #4b4b4b; 
+    border-bottom: 1px solid ${colors.lineColor};
 `; 
 
 const LogoContainer = styled.div`

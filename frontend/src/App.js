@@ -2,6 +2,7 @@ import React from "react";
 import {createGlobalStyle} from "styled-components"
 import Reset from 'styled-reset';
 import Router from "./components/layouts/Router";
+import {colors} from "./styles/colors";
 
 const GlobalSyle = createGlobalStyle`
   ${Reset};
@@ -17,6 +18,7 @@ const GlobalSyle = createGlobalStyle`
     font-size: 1.4rem;
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 300;
+    background-color: ${colors.bgColor};
   }
   a{
     text-decoration: none;
