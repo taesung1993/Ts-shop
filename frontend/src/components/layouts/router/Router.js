@@ -4,16 +4,16 @@ import {
     Switch,
     Route,
   } from "react-router-dom";
-import Header from "./Header";
-import Home from "../views/Home";
-import Join from "../views/Join";
-import Login from "../views/Login";
-import Categories from "../views/Categories";
-import ItemDetail from "../views/ItemDetail";
-import Purchase from "../views/Purchase";
-import ShopBascket from "../views/ShopBascket";
-import User from "../User";
-import Customer from "../Customer";
+import Header from "../header/Header";
+import Home from "../../views/Home";
+import Join from "../../views/Join";
+import Login from "../../views/Login";
+import Categories from "../../views/Categories";
+import ItemDetail from "../../views/ItemDetail";
+import Purchase from "../../views/Purchase";
+import ShopBascket from "../../views/ShopBascket";
+import User from "../../User";
+import Customer from "../../Customer";
 
 const Router = () => {
     return (

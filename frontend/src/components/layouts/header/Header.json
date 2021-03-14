@@ -1,0 +1,54 @@
+{
+    "inner":{
+        "linkColumn": [
+            {
+                "name": "즐겨찾기",
+                "path": null
+            },
+            {
+                "name": "회원가입",
+                "path": "/join"
+            },
+            {
+                "name": "로그인",
+                "path": "/login"
+            },
+            {
+                "name": "장바구니",
+                "path": "/shopping-basket"
+            }
+        ]
+    },
+    "tabMenu": {
+        "tabMenuItems": [
+            {
+                "name": "OUTER",
+                "path": "/categories/outer"
+            },
+            {
+                "name": "TOP",
+                "path": "/categories/top"
+            },
+            {
+                "name": "PANTS",
+                "path": "/categories/pants"
+            },
+            {
+                "name": "SHIRTS",
+                "path": "/categories/shirts"
+            },
+            {
+                "name": "SHOES",
+                "path": "/categories/shoes"
+            },
+            {
+                "name": "BAG",
+                "path": "/categories/bag"
+            },
+            {
+                "name": "ACC",
+                "path": "/categories/acc"
+            }
+        ]
+    }
+}

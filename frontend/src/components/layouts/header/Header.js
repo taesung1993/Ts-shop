@@ -1,7 +1,8 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 import styled from "styled-components";
-import {colors} from "../../styles/colors";
+import {colors} from "../../../styles/colors";
+import jsonFromHeader from "./Header.json";
 
 const Container = styled.header`
 `;
@@ -86,56 +87,10 @@ const FontAwesomeIcon = styled.i`
     font-size: 1.3rem;
 `;
 
-const linkColumnMenus = [
-    {
-        name: "즐겨찾기",
-        path: null
-    },
-    {
-        name: "회원가입",
-        path: "/join"
-    },
-    {
-        name: "로그인",
-        path: "/login"
-    },
-    {
-        name: "장바구니",
-        path: "/shopping-basket"
-    }
-]
+const { inner: {linkColumn},
+        tabMenu: {tabMenuItems}
+    } = jsonFromHeader;
 
-
-const itemMenus = [
-    {
-        name: 'OUTER',
-        path: "/categories/outer"
-    },
-    {
-        name: 'TOP',
-        path: "/categories/top"
-    },
-    {
-        name: 'PANTS',
-        path: '/categories/pants'
-    },
-    {
-        name: 'SHIRTS',
-        path: '/categories/shirts'
-    },
-    {
-        name: 'SHOES',
-        path: '/categories/shoes'
-    },
-    {
-        name: 'BAG',
-        path: '/categories/bag'
-    },
-    {
-        name: 'ACC',
-        path: '/categories/acc'
-    }
-];
 
 const Header = () => {
     return (
@@ -156,9 +111,10 @@ const Header = () => {
                     </IconContainer>
                 </InnerCol>
                 <InnerCol kinds="linkColumn">
-                    {linkColumnMenus.map(({name, path}, idx) => 
+                    {linkColumn.map(({name, path}, idx) => 
                         path !== null ? 
-                            <InnerLink to={path} key={idx} order={idx === linkColumnMenus.length-1 ? "last" : "noLast"}>{name}</InnerLink>
+                            <InnerLink to={path} key={idx} 
+                            order={idx === linkColumn.length-1 ? "last" : "noLast"}>{name}</InnerLink>
                             :
                             <Favorites key={idx}>{name}</Favorites>
                     )}
@@ -167,9 +123,9 @@ const Header = () => {
             <LogoContainer>
                 <Logo src={'/images/logo/logo.png'}/>
             </LogoContainer>
-            <TabMenu menuLen={itemMenus.length}>
+            <TabMenu menuLen={tabMenuItems.length}>
                 {
-                    itemMenus.map(({name, path}, idx) => <MenuItem key={name+idx} to={path}>{name}</MenuItem>)
+                    tabMenuItems.map(({name, path}, idx) => <MenuItem key={name+idx} to={path}>{name}</MenuItem>)
                 }
             </TabMenu>
         </Container>
