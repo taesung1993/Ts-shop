@@ -9,9 +9,22 @@ const Container = styled.header`
 const Inner = styled.div`
     height: 50px;
     border-bottom: 1px solid ${colors.lineColor};
+    display: flex;
 `; 
 
-const InnerCol = styled.div``;
+const InnerCol = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: ${({kinds}) => kinds === "linkColumn" ? "flex-end" : "flex-start"};
+    align-items: center;
+`;
+
+const InnerLink = styled(Link)`
+`;
+
+const Favorites = styled.div`
+    cursor: pointer;
+`;
 
 const LogoContainer = styled.div`
     display: flex;
@@ -48,8 +61,27 @@ const FontAwesomeIcon = styled.i`
     transform: scale(1.4);
 `;
 
+const linkColumnMenus = [
+    {
+        name: "즐겨찾기",
+        path: null
+    },
+    {
+        name: "회원가입",
+        path: "/join"
+    },
+    {
+        name: "로그인",
+        path: "/login"
+    },
+    {
+        name: "장바구니",
+        path: "/shopping-basket"
+    }
+]
 
-const menus = [
+
+const itemMenus = [
     {
         name: 'OUTER',
         path: "/categories/outer"
@@ -84,7 +116,7 @@ const Header = () => {
     return (
         <Container>
             <Inner>
-                <InnerCol>
+                <InnerCol kinds="snsColumn">
                     <IconContainer>
                         <FontAwesomeIcon className="fab fa-instagram"/>
                     </IconContainer>
@@ -98,20 +130,21 @@ const Header = () => {
                         <FontAwesomeIcon className="far fa-envelope"/>
                     </IconContainer>
                 </InnerCol>
-                <InnerCol>
-                    <div><span>즐겨찾기</span></div>
-                    <div><span>회원가입</span></div>
-                    <div><span>로그인</span></div>
-                    <div><span>주문하기</span></div>
-                    <div><span>장바구니</span></div>
+                <InnerCol kinds="linkColumn">
+                    {linkColumnMenus.map(({name, path}, idx) => 
+                        path !== null ? 
+                            <InnerLink to={path} key={idx}>{name}</InnerLink>
+                            :
+                            <Favorites key={idx}>{name}</Favorites>
+                    )}
                 </InnerCol>
             </Inner>
             <LogoContainer>
                 <Logo src={'/images/logo/logo.png'}/>
             </LogoContainer>
-            <TabMenu menuLen={menus.length}>
+            <TabMenu menuLen={itemMenus.length}>
                 {
-                    menus.map(({name, path}, idx) => <MenuItem key={name+idx} to={path}>{name}</MenuItem>)
+                    itemMenus.map(({name, path}, idx) => <MenuItem key={name+idx} to={path}>{name}</MenuItem>)
                 }
             </TabMenu>
         </Container>
