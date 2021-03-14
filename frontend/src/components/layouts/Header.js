@@ -10,6 +10,8 @@ const Inner = styled.div`
     height: 50px;
     border-bottom: 1px solid ${colors.lineColor};
     display: flex;
+    padding: 0 50px;
+    color: ${colors.grey};
 `; 
 
 const InnerCol = styled.div`
@@ -21,11 +23,17 @@ const InnerCol = styled.div`
 
 const InnerLink = styled(Link)`
     margin-right: ${({order}) => order === "last" ? 0 : "10px"};
+    &:hover{
+        color: ${colors.black};
+    }
 `;
 
 const Favorites = styled.div`
     cursor: pointer;
     margin-right: 10px;
+    &:hover{
+        color: ${colors.black};
+    }
 `;
 
 const LogoContainer = styled.div`
@@ -56,11 +64,26 @@ const MenuItem = styled(Link)`
 `;
 
 const IconContainer = styled.span`
+    display: block;
     margin-right: ${({order}) => order === "last" ? 0 : "10px"};
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid ${colors.lineColor};
+    position: relative;
+    cursor: pointer;
+    &:hover{
+        color: ${colors.black};
+        border-color: ${colors.black};
+    }
 `;
 
 const FontAwesomeIcon = styled.i`
-    transform: scale(1.4);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.3rem;
 `;
 
 const linkColumnMenus = [

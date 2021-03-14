@@ -18,6 +18,7 @@ const GlobalSyle = createGlobalStyle`
     font-size: 1.4rem;
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 300;
+    color: ${colors.black};
     background-color: ${colors.bgColor};
   }
   a{
