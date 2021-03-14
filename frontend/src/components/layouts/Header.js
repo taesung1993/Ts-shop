@@ -20,10 +20,12 @@ const InnerCol = styled.div`
 `;
 
 const InnerLink = styled(Link)`
+    margin-right: ${({order}) => order === "last" ? 0 : "10px"};
 `;
 
 const Favorites = styled.div`
     cursor: pointer;
+    margin-right: 10px;
 `;
 
 const LogoContainer = styled.div`
@@ -133,7 +135,7 @@ const Header = () => {
                 <InnerCol kinds="linkColumn">
                     {linkColumnMenus.map(({name, path}, idx) => 
                         path !== null ? 
-                            <InnerLink to={path} key={idx}>{name}</InnerLink>
+                            <InnerLink to={path} key={idx} order={idx === linkColumnMenus.length-1 ? "last" : "noLast"}>{name}</InnerLink>
                             :
                             <Favorites key={idx}>{name}</Favorites>
                     )}
