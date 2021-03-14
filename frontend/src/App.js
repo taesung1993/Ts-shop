@@ -2,7 +2,7 @@ import React from "react";
 import {createGlobalStyle} from "styled-components"
 import Reset from 'styled-reset';
 import Router from "./components/layouts/router/Router";
-import {colors} from "./styles/colors";
+import {colors} from "./styles/config/colors";
 
 const GlobalSyle = createGlobalStyle`
   ${Reset};
