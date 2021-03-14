@@ -1,3 +1,4 @@
 export const colors = {
-    lineColor: "#f1f2f6"
+    lineColor: "#d2dae2",
+    black: "#4b4b4b"
 };

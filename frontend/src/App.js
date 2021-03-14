@@ -15,6 +15,8 @@ const GlobalSyle = createGlobalStyle`
     width: 100vw;
     min-height: 100vh;
     font-size: 1.4rem;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
   }
   a{
     text-decoration: none;
