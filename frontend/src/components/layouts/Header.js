@@ -11,6 +11,8 @@ const Inner = styled.div`
     border-bottom: 1px solid ${colors.lineColor};
 `; 
 
+const InnerCol = styled.div``;
+
 const LogoContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -36,6 +38,14 @@ const TabMenu = styled.div`
 const MenuItem = styled(Link)`
     justify-self: center;
     align-self: center;
+`;
+
+const IconContainer = styled.span`
+    margin-right: ${({order}) => order === "last" ? 0 : "10px"};
+`;
+
+const FontAwesomeIcon = styled.i`
+    transform: scale(1.4);
 `;
 
 
@@ -73,7 +83,29 @@ const menus = [
 const Header = () => {
     return (
         <Container>
-            <Inner></Inner>
+            <Inner>
+                <InnerCol>
+                    <IconContainer>
+                        <FontAwesomeIcon className="fab fa-instagram"/>
+                    </IconContainer>
+                    <IconContainer>
+                        <FontAwesomeIcon className="fab fa-facebook-square"/>
+                    </IconContainer>
+                    <IconContainer>
+                        <FontAwesomeIcon className="fab fa-twitter-square"/>
+                    </IconContainer>
+                    <IconContainer order={"last"}>
+                        <FontAwesomeIcon className="far fa-envelope"/>
+                    </IconContainer>
+                </InnerCol>
+                <InnerCol>
+                    <div><span>즐겨찾기</span></div>
+                    <div><span>회원가입</span></div>
+                    <div><span>로그인</span></div>
+                    <div><span>주문하기</span></div>
+                    <div><span>장바구니</span></div>
+                </InnerCol>
+            </Inner>
             <LogoContainer>
                 <Logo src={'/images/logo/logo.png'}/>
             </LogoContainer>
