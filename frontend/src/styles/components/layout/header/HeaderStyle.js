@@ -56,7 +56,7 @@ export const TabMenu = styled.div`
     display: grid;
     grid-template-columns: ${(props) => `repeat(${props.menuLen}, 1fr)`};
 
-    @media only screen and (max-width: 1024px){
+    @media only screen and (max-width: 1280px){
         padding: 0 50px;
     }
 `;
