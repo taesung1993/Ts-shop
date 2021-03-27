@@ -25,14 +25,14 @@ const TitleContainer = styled.div`
 `;
 
 const PageTitle = styled.span`
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: 700;
     margin-right: 20px;
     padding-left: 20px;
 `;
 const PageExplanation = styled.span`
     opacity: 0.8;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
 `;
 
 const Main = styled.main`
@@ -54,7 +54,9 @@ const Card = styled.div`
 `;
 
 const CardTitle = styled.h3`
-    font-size: 1.2rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
 `;
 
 const RegisterProduct = () => {
@@ -68,7 +70,7 @@ const RegisterProduct = () => {
             </Header>
             <Main>
                 <Card>
-                    <CardTitle>기본 정보 입력</CardTitle>
+                    <CardTitle>STEP 1 기본 정보 입력</CardTitle>
                 </Card>
             </Main>
         </Container>
