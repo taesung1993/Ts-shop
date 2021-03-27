@@ -12,8 +12,9 @@ import Categories from "../../views/Categories";
 import ItemDetail from "../../views/ItemDetail";
 import Purchase from "../../views/Purchase";
 import ShopBascket from "../../views/ShopBascket";
-import User from "../../User";
-import Customer from "../../Customer";
+import User from "./User";
+import Customer from "./Customer";
+import RegisterProduct from '../../views/RegisterProduct';
 
 const Router = () => {
     return (
@@ -30,6 +31,7 @@ const Router = () => {
                     <Route path="/shopping-basket" component={ShopBascket}/>
                     <Route path="/user" component={User}/>
                     <Route path="/customer" component={Customer} />
+                    <Route path="/register-product" component={RegisterProduct} />
                 </Switch>
             </BrowserRouter>
         </>

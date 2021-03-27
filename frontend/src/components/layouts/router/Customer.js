@@ -1,8 +1,8 @@
 import React from 'react';
 import {Route} from "react-router-dom";
-import Cscenter from "./views/Cscenter";
-import ReviewPage from "./views/ReviewPage";
-import Notice from "./views/Notice";
+import Cscenter from "../../views/Cscenter";
+import ReviewPage from "../../views/ReviewPage";
+import Notice from "../../views/Notice";
 
 const Customer = ({match}) => {
     const {path} = match;

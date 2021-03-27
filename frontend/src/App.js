@@ -12,7 +12,7 @@ const GlobalSyle = createGlobalStyle`
   html{
     font-size: 10px;
   }
-  body{
+  #root{
     width: 100vw;
     min-height: 100vh;
     font-size: 1.4rem;
@@ -20,6 +20,8 @@ const GlobalSyle = createGlobalStyle`
     font-weight: 300;
     color: ${colors.black};
     background-color: ${colors.bgColor};
+    display: flex;
+    flex-direction: column;
   }
   a{
     text-decoration: none;

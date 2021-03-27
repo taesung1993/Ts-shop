@@ -1,8 +1,8 @@
 import React from 'react';
 import {Route} from "react-router-dom";
-import Myprofile from "./views/Myprofile";
-import ModifyProfile from "./views/ModifyProfile";
-import CheckOrder from "./views/CheckOrder";
+import Myprofile from "../../views/Myprofile";
+import ModifyProfile from "../../views/ModifyProfile";
+import CheckOrder from "../../views/CheckOrder";
 
 const User = ({match}) => {
     const {path} = match;
