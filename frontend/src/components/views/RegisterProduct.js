@@ -12,16 +12,10 @@ const Container = styled.div`
 const Header = styled.header`
     width: 70vw;
     padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 30px 0;
+    margin: 25px 0;
 `;
 
 const TitleContainer = styled.div`
-    width: 100%;
-    max-width: 700px;
-    min-width: 500px;
     border-left: 5px solid ${colors.black};
 `;
 
@@ -31,83 +25,88 @@ const PageTitle = styled.span`
     margin-right: 20px;
     padding-left: 20px;
 `;
+
+const RegisterStep = styled.span`
+    opacity: 0.8;
+    color: #1e90ff;
+    margin-right: 5px;
+`;
+
 const PageExplanation = styled.span`
     opacity: 0.8;
+    color: #1e90ff;
     font-size: 1.6rem;
 `;
 
 const Main = styled.main`
     width: 70vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding-bottom: 50px;
+    padding: 0 20px;
+    display: flex;
 `;
 
 const Card = styled.div`
     background-color: #ffffff;
     width: 100%;
-    max-width: 700px;
     min-width: 500px;
+    height: 100%;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.2),0 1px 5px 0 rgba(0,0,0,0.12);
     border-radius: 5px;
     border: 1px solid ${colors.lineColor};
-    padding: 20px;
+    padding: 30px;
 `;
 
-const CardTitle = styled.h3`
-    font-size: 1.8rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 30px;
-`;
-
-const CardTitleText = styled.span`
-    padding-right: ${(props) => props.type === "step" ? '5px' : 0};
-    padding-left: ${(props) => props.type === "title" ? '5px' : 0};
-`;
-
-const CardBody = styled.div`
-    display: flex;
-    justify-content: center;
-`;
-
-const Form = styled.form`
-    width: 100%;
-`;
-
-const InputLable = styled.span`
-    display: block;
-    font-size: 1.3rem;
+const Label = styled.h1`
+    font-size: 1.4rem;
     font-weight: 500;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 `;
-
 const InputContainer = styled.div`
-    padding: 10px;
+    padding: 0 10px;
+    margin-bottom: ${(props) => props.order === "last" ? "10px" : "20px"};
 `;
-
 const Input = styled.input`
     width: 100%;
-    padding: 5px 10px;
-    margin-bottom: 20px;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    border: 1px solid ${colors.lineColor};
+    border-radius: 5px;
+    &:focus{
+        outline: none;
+        border: 1px solid #1e90ff;
+        color: #1e90ff;
+    }
 `;
 
 const Categories = styled.div`
-    margin-bottom: 20px;
-    padding: 10px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(7, minmax(50px, 150px));
     grid-gap: 15px;
+    padding: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
 `;
 
-const Box = styled.div`
+const Category = styled.div`
     width: 100%;
     height: 0;
     padding-bottom: 100%;
     border: 1px solid ${colors.lineColor};
     border-radius: 5px;
+    &:hover{
+        border-color: #1e90ff;
+    }
+`;
+
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+`;
+
+const NextButton = styled.button`
+    width: 200px;
+    height: 40px;
 `;
 
 
@@ -117,29 +116,28 @@ const RegisterProduct = () => {
             <Header>
                 <TitleContainer>
                     <PageTitle>상품 등록</PageTitle>
-                    <PageExplanation>새로운 상품을 업로드 합니다</PageExplanation>
+                    <RegisterStep>STEP 1</RegisterStep>
+                    <PageExplanation>기본정보 입력</PageExplanation>
                 </TitleContainer>
             </Header>
             <Main>
                 <Card>
-                    <CardTitle>
-                        <CardTitleText type="step">STEP 1</CardTitleText>
-                        <CardTitleText type="title">기본 정보 입력</CardTitleText>    
-                    </CardTitle>
-                    <CardBody>
-                        <Form>
-                            <InputLable className="product-name-label">노출 상품명</InputLable>
-                            <InputContainer><Input/></InputContainer>
-                            <InputLable className="product-name-label">카테고리</InputLable>
-                            <Categories>
-                                {['OUTER', 'TOP', 'PANTS', 'SHOES', 'BAG', 'ACC'].map((item, idx) => <Box key={idx}>{item}</Box>)}
-                            </Categories>
-                            <InputLable className="product-name-label">옵션상품</InputLable>
-                            <Input/>
-                            <InputLable className="product-name-label">대표이미지</InputLable>
-                            <Input/>
-                        </Form>
-                    </CardBody>
+                    <Label>노출 상품명</Label>
+                    <InputContainer><Input/></InputContainer>
+                    <Label>판매 가격</Label>
+                    <InputContainer><Input/></InputContainer>
+                    <Label>카테고리</Label>
+                    <Categories>
+                        {
+                            ['OUTER', 'TOP', 'SHIRTS', 'PANTS', 'SHOES', 'BAG', 'ACC'].map((category, idx) => <Category key={idx}>{category}</Category>
+                            )
+                        }
+                    </Categories>
+                    <Label>세부 카테고리</Label>
+                    <InputContainer order="last"><Input/></InputContainer>
+                    <ButtonContainer>
+                        <NextButton>다음</NextButton>
+                    </ButtonContainer>
                 </Card>
             </Main>
         </Container>
