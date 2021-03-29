@@ -93,6 +93,34 @@ const UploadImageBox = styled.div`
     border-radius: 5px;
 `;
 
+const AddOptionBox = styled.div`
+    padding: 10px;
+`;
+
+const AddOptionRow = styled.div`
+    &:first-child{
+        display: flex;
+    }
+    &:nth-child(2){
+        display: grid;
+        grid-template-columns: 1fr 1fr 50px;
+        grid-gap: 5px;
+    }
+    &:last-child{
+        border: 1px solid ${colors.lineColor};
+        margin-top: 5px;
+        padding: 10px;
+    }
+`;
+
+const LabelExplain = styled.span`
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-left: 5px;
+`;
+
+const AddButton = styled.button``;
+
 
 const RegisterProduct = () => {
     return (
@@ -119,6 +147,34 @@ const RegisterProduct = () => {
                         </CardSection>
                         <CardSection>
                             <Label>옵션 추가</Label>
+                            <AddOptionBox>
+                                <AddOptionRow>
+                                    <Label>색상</Label>
+                                    <LabelExplain>상품의 색상 옵션을 추가합니다.</LabelExplain>
+                                </AddOptionRow>
+                                <AddOptionRow>
+                                    <Input type="text" placeholder="이름"/>
+                                    <Input type="number" placeholder="수량"/>
+                                    <AddButton>추가</AddButton>
+                                </AddOptionRow>
+                                <AddOptionRow>
+                                    추가 목록
+                                </AddOptionRow>
+                            </AddOptionBox>
+                            <AddOptionBox>
+                                <AddOptionRow>
+                                    <Label>사이즈</Label>
+                                    <LabelExplain>상품의 사이즈 옵션을 추가합니다.</LabelExplain>
+                                </AddOptionRow>
+                                <AddOptionRow>
+                                    <Input type="text" placeholder="이름"/>
+                                    <Input type="number" placeholder="수량"/>
+                                    <AddButton>추가</AddButton>
+                                </AddOptionRow>
+                                <AddOptionRow>
+                                    추가 목록
+                                </AddOptionRow>
+                            </AddOptionBox>
                         </CardSection>
                     </Card>
                 </MainCol>
