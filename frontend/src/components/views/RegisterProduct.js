@@ -77,6 +77,8 @@ const Option = styled.option``;
 const Input = styled.input`
     width: 100%;
     padding: 5px 10px;
+    border: 1px solid ${colors.lineColor};
+    background: transparent;
 `;
 
 const UploadImageWrapper = styled.div`
