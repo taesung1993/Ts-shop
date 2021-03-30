@@ -119,7 +119,17 @@ const LabelExplain = styled.span`
     margin-left: 5px;
 `;
 
+const ButtonContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
 const AddButton = styled.button``;
+const Button = styled.button`
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+`;
 
 
 const RegisterProduct = () => {
@@ -207,6 +217,10 @@ const RegisterProduct = () => {
                             <Input type="number"/>
                         </CardSection>
                     </Card>
+                    <ButtonContainer>
+                        <Button>미리보기</Button>
+                        <Button>등록하기</Button>
+                    </ButtonContainer>
                 </MainCol>
             </Main>
         </Container>
