@@ -141,14 +141,17 @@ const newProductObject = {
     mainImage: '',
     restImages: null,
     option:{
-        sizes: null,
-        colors: null
+        sizes: [],
+        colors: []
     }
 };
 
 const RegisterProduct = () => {
     const [newProductObj, updateNewProductObj] = useState(newProductObject);
-    console.log(newProductObj);
+    const [colorOption, setColorOption] = useState({name: '', amount: 0});
+    const [sizeOption, setSizeOption] = useState({name: '', amount: 0});
+
+    console.log("ㅎㅎㅎㅎ ====> ", newProductObj);
     return (
         <Container>
             <Header>
@@ -185,9 +188,37 @@ const RegisterProduct = () => {
                                     <LabelExplain>상품의 색상 옵션을 추가합니다.</LabelExplain>
                                 </AddOptionRow>
                                 <AddOptionRow>
-                                    <Input type="text" placeholder="이름" />
-                                    <Input type="number" placeholder="수량"/>
-                                    <AddButton>추가</AddButton>
+                                    <Input type="text" placeholder="이름" value={colorOption.name}
+                                            onChange={(e) => {
+                                                const {value} = e.target;
+                                                setColorOption({
+                                                    ...colorOption,
+                                                    name: value
+                                                });
+                                    }}/>
+                                    <Input  type="number" placeholder="수량" value={colorOption.amount}
+                                            onChange={(e) => {
+                                                const {value} = e.target;
+                                                setColorOption({
+                                                    ...colorOption,
+                                                    amount: value
+                                                });
+                                            }}
+                                    />
+                                    <AddButton onClick={(e) => {
+                                        const {option: optionFromNewProductObj} = newProductObj;
+                                        const colorOptions = optionFromNewProductObj.colors;
+                                        colorOptions.push(colorOption);
+                                        updateNewProductObj({
+                                            ...newProductObj,
+                                            option: {
+                                                ...optionFromNewProductObj,
+                                                colors: colorOptions
+                                            }
+                                        })
+                                        setColorOption({name: '', amount: 0});
+                                        
+                                    }}>추가</AddButton>
                                 </AddOptionRow>
                                 <AddOptionRow>
                                     추가 목록
@@ -199,9 +230,38 @@ const RegisterProduct = () => {
                                     <LabelExplain>상품의 사이즈 옵션을 추가합니다.</LabelExplain>
                                 </AddOptionRow>
                                 <AddOptionRow>
-                                    <Input type="text" placeholder="이름"/>
-                                    <Input type="number" placeholder="수량"/>
-                                    <AddButton>추가</AddButton>
+                                    <Input  type="text" placeholder="이름" value={sizeOption.name}
+                                            onChange={(e) => {
+                                                const {value} = e.target;
+                                                setSizeOption({
+                                                    ...sizeOption,
+                                                    name: value
+                                                });
+                                            }}
+                                    />
+                                    <Input  type="number" placeholder="수량" value={sizeOption.amount}
+                                            onChange={(e) => {
+                                                const {value} = e.target;
+                                                setSizeOption({
+                                                    ...sizeOption,
+                                                    amount: value/1
+                                                })
+                                            }}
+                                    />
+                                    <AddButton onClick={(e) => {
+                                        const {option: optionFromNewProductObj} = newProductObj;
+                                        const sizeOptions = optionFromNewProductObj.sizes;
+                                        sizeOptions.push(sizeOptions);
+                                        updateNewProductObj({
+                                            ...newProductObj,
+                                            option: {
+                                                ...optionFromNewProductObj,
+                                                sizes: sizeOptions
+                                            }
+                                        })
+                                        setSizeOption({name: '', amount: 0});
+                                        
+                                    }}>추가</AddButton>
                                 </AddOptionRow>
                                 <AddOptionRow>
                                     추가 목록
