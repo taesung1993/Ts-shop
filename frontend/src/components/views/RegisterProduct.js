@@ -203,6 +203,7 @@ const RegisterProduct = () => {
                                                     ...colorOption,
                                                     amount: value
                                                 });
+                                                console.log("다시 테스트");
                                             }}
                                     />
                                     <AddButton onClick={(e) => {
