@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import {colors} from "styles/config/colors"
 
@@ -125,16 +125,30 @@ const ButtonContainer = styled.div`
     display: flex;
     flex-direction: column;
 `;
-const AddButton = styled.button``;
+const AddButton = styled.button`
+    cursor: pointer;
+`;
 const Button = styled.button`
-    width: 100%;
+    width: "100%";
     padding: 10px;
     margin-bottom: 5px;
     border-radius: 5px;
+    cursor: pointer;
 `;
 
+const newProductObject = {
+    exportedName: '',
+    mainImage: '',
+    restImages: null,
+    option:{
+        sizes: null,
+        colors: null
+    }
+};
 
 const RegisterProduct = () => {
+    const [newProductObj, updateNewProductObj] = useState(newProductObject);
+    console.log(newProductObj);
     return (
         <Container>
             <Header>
@@ -147,7 +161,13 @@ const RegisterProduct = () => {
                     <Card>
                         <CardSection>
                             <Label>노출 상품명</Label>
-                            <Input type="text"/>
+                            <Input type="text" name="exportedName" onChange={(e) => {
+                                const {value, name} = e.target;
+                                updateNewProductObj({
+                                    ...newProductObj,
+                                    [name]: value
+                                })
+                            }}/>
                         </CardSection>
                         <CardSection>
                             <Label>이미지 등록</Label>
@@ -165,7 +185,7 @@ const RegisterProduct = () => {
                                     <LabelExplain>상품의 색상 옵션을 추가합니다.</LabelExplain>
                                 </AddOptionRow>
                                 <AddOptionRow>
-                                    <Input type="text" placeholder="이름"/>
+                                    <Input type="text" placeholder="이름" />
                                     <Input type="number" placeholder="수량"/>
                                     <AddButton>추가</AddButton>
                                 </AddOptionRow>
