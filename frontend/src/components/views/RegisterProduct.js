@@ -305,14 +305,20 @@ const RegisterProduct = () => {
                         <Button>미리보기</Button>
                         <Button onClick={
                             async () => {
-                                console.log(newProductObj);
-                                const res = axios.post('/api/register-product', {
-                                    success: true,
-                                    test: {
-                                        num: 1
+                                try{
+                                    const {data: {error}} = await axios.post('/api/register-product', {
+                                        success: false,
+                                        test: {
+                                            num: 1
+                                        }
+                                    });
+                                    if(error){
+                                        throw new Error("에러 발생!"); 
                                     }
-                                });
-                                
+                                }
+                                catch(error){
+                                    console.log(error.message);
+                                }
                             }
                         }>등록하기</Button>
                     </ButtonContainer>

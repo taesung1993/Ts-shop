@@ -1,11 +1,8 @@
 import express from "express";
+import {registerProduct} from "../controllers/apiCOntrollers";
 
 const apiRouter = express.Router();
 
-apiRouter.post("/register-product", (req, res, next) => {
-    console.log("post 요청 들어옴!");
-    console.log(req.body);
-    //next();
-});
+apiRouter.post("/register-product", registerProduct);
 
 export default apiRouter;
