@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
+import axios from "axios";
 import {colors} from "styles/config/colors"
 
 const Container = styled.div`
@@ -302,7 +303,18 @@ const RegisterProduct = () => {
                     </Card>
                     <ButtonContainer>
                         <Button>미리보기</Button>
-                        <Button>등록하기</Button>
+                        <Button onClick={
+                            async () => {
+                                console.log(newProductObj);
+                                const res = axios.post('/api/register-product', {
+                                    success: true,
+                                    test: {
+                                        num: 1
+                                    }
+                                });
+                                
+                            }
+                        }>등록하기</Button>
                     </ButtonContainer>
                 </MainCol>
             </Main>

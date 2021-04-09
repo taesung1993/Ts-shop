@@ -6,15 +6,20 @@
   "license": "MIT",
   "dependencies": {
     "concurrently": "^6.0.0",
+    "core-js": "^3.10.1",
     "express": "^4.17.1"
   },
   "scripts": {
-    "start": "node index.js",
-    "backend": "nodemon index.js",
+    "start": "node src/init.js",
+    "backend": "nodemon --exec babel-node src/init.js",
     "frontend": "cd .. && cd frontend && npm start",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.15",
+    "body-parser": "^1.19.0",
     "nodemon": "^2.0.7"
   }
 }
