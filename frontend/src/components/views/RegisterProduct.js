@@ -217,6 +217,20 @@ const RegisterProduct = () => {
         setColorOption({name: '', amount: 0});
     }
 
+    const addSizeOption = () => {
+        const {option: optionFromNewProductObj} = newProductObj;
+        const sizeOptions = optionFromNewProductObj.sizes;
+        sizeOptions.push(sizeOption);
+        updateNewProductObj({
+            ...newProductObj,
+            option: {
+                ...optionFromNewProductObj,
+                sizes: sizeOptions
+            }
+        })
+        setSizeOption({name: '', amount: 0});
+    }
+
 
     return (
         <Container>
@@ -264,20 +278,7 @@ const RegisterProduct = () => {
                                 <AddOptionRow>
                                     <Input type="text" placeholder="이름" value={sizeOption.name} name={SIZE_OPTION_NAME} onChange={updateSizeOptions}/>
                                     <Input type="number" placeholder="수량" value={sizeOption.amount} name={SIZE_OPTION_AMOUNT} onChange={updateSizeOptions}/>
-                                    <AddButton onClick={(e) => {
-                                        const {option: optionFromNewProductObj} = newProductObj;
-                                        const sizeOptions = optionFromNewProductObj.sizes;
-                                        sizeOptions.push(sizeOptions);
-                                        updateNewProductObj({
-                                            ...newProductObj,
-                                            option: {
-                                                ...optionFromNewProductObj,
-                                                sizes: sizeOptions
-                                            }
-                                        })
-                                        setSizeOption({name: '', amount: 0});
-                                        
-                                    }}>추가</AddButton>
+                                    <AddButton onClick={addSizeOption}>추가</AddButton>
                                 </AddOptionRow>
                                 <AddOptionRow>
                                     추가 목록
