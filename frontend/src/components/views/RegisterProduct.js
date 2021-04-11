@@ -147,12 +147,77 @@ const newProductObject = {
     }
 };
 
+const COLOR_OPTION_NAME = 'COLOR_OPTION_NAME';
+const COLOR_OPTION_AMOUNT = 'COLOR_OPTION_AMOUNT';
+const SIZE_OPTION_NAME = 'SIZE_OPTION_NAME';
+const SIZE_OPTION_AMOUNT = 'SIZE_OPTION_AMOUNT';
+
 const RegisterProduct = () => {
     const [newProductObj, updateNewProductObj] = useState(newProductObject);
     const [colorOption, setColorOption] = useState({name: '', amount: 0});
     const [sizeOption, setSizeOption] = useState({name: '', amount: 0});
 
-    console.log("ㅎㅎㅎㅎ ====> ", newProductObj);
+    const inputExportedName = (e) => {
+        /* 노출 상품명 입력처리하는 함수*/
+        const {value, name} = e.target;
+        updateNewProductObj({
+            ...newProductObj,
+            [name]: value
+        });
+    }
+    const updateColorOptions = (e) => {
+        const {value, name:optionName} = e.target;
+        const controlUpdateOption = (value, optionName) => {
+            const updateName = () => setColorOption({...colorOption, name: value});
+            const updateAmount = (newValue) => setColorOption({...colorOption, amount: newValue});
+            switch(optionName){
+                case COLOR_OPTION_NAME:
+                    updateName();
+                    break;
+                case COLOR_OPTION_AMOUNT:
+                    const newValue = value*1;
+                    updateAmount(newValue);
+                    break;
+            }
+        }
+        /* 컴포넌트에 Name 속성 값에 따라 어떤 것을 업데이트할지 제어한다. */
+        controlUpdateOption(value, optionName);
+    }
+
+    const updateSizeOptions = (e) => {
+        const {value, name:optionName} = e.target;
+        const controlUpdateOption = (value, optionName) => {
+            const updateName = () => setSizeOption({...sizeOption, name: value});
+            const updateAmount = (newValue) => setSizeOption({...sizeOption, amount: newValue});
+            switch(optionName){
+                case SIZE_OPTION_NAME:
+                    updateName();
+                    break;
+                case SIZE_OPTION_AMOUNT:
+                    const newValue = value*1;
+                    updateAmount(newValue);
+                    break;
+            }
+        }
+        /* 컴포넌트에 Name 속성 값에 따라 어떤 것을 업데이트할지 제어한다. */
+        controlUpdateOption(value, optionName);
+    }
+
+    const addColorOption = () => {
+        const {option: optionFromNewProductObj} = newProductObj;    // newProductObj의 option 객체를 디스럭터링한다.
+        const colorOptions = optionFromNewProductObj.colors;        // option 객체에서 color 배열 데이터를 따로 빼서 저장한다.
+        colorOptions.push(colorOption);                             // colorOption 배열에 추가
+        updateNewProductObj({
+            ...newProductObj,
+            option: {
+                ...optionFromNewProductObj,
+                colors: colorOptions
+            }
+        })
+        setColorOption({name: '', amount: 0});
+    }
+
+
     return (
         <Container>
             <Header>
@@ -165,13 +230,7 @@ const RegisterProduct = () => {
                     <Card>
                         <CardSection>
                             <Label>노출 상품명</Label>
-                            <Input type="text" name="exportedName" onChange={(e) => {
-                                const {value, name} = e.target;
-                                updateNewProductObj({
-                                    ...newProductObj,
-                                    [name]: value
-                                })
-                            }}/>
+                            <Input type="text" name="exportedName" onChange={inputExportedName}/>
                         </CardSection>
                         <CardSection>
                             <Label>이미지 등록</Label>
@@ -189,38 +248,9 @@ const RegisterProduct = () => {
                                     <LabelExplain>상품의 색상 옵션을 추가합니다.</LabelExplain>
                                 </AddOptionRow>
                                 <AddOptionRow>
-                                    <Input type="text" placeholder="이름" value={colorOption.name}
-                                            onChange={(e) => {
-                                                const {value} = e.target;
-                                                setColorOption({
-                                                    ...colorOption,
-                                                    name: value
-                                                });
-                                    }}/>
-                                    <Input  type="number" placeholder="수량" value={colorOption.amount}
-                                            onChange={(e) => {
-                                                const {value} = e.target;
-                                                setColorOption({
-                                                    ...colorOption,
-                                                    amount: value
-                                                });
-                                                console.log("다시 테스트");
-                                            }}
-                                    />
-                                    <AddButton onClick={(e) => {
-                                        const {option: optionFromNewProductObj} = newProductObj;
-                                        const colorOptions = optionFromNewProductObj.colors;
-                                        colorOptions.push(colorOption);
-                                        updateNewProductObj({
-                                            ...newProductObj,
-                                            option: {
-                                                ...optionFromNewProductObj,
-                                                colors: colorOptions
-                                            }
-                                        })
-                                        setColorOption({name: '', amount: 0});
-                                        
-                                    }}>추가</AddButton>
+                                    <Input type="text" placeholder="이름" name={COLOR_OPTION_NAME} value={colorOption.name} onChange={updateColorOptions}/>
+                                    <Input  type="number" placeholder="수량" name={COLOR_OPTION_AMOUNT} value={colorOption.amount} onChange={updateColorOptions} min={0}/>
+                                    <AddButton onClick={addColorOption}>추가</AddButton>
                                 </AddOptionRow>
                                 <AddOptionRow>
                                     추가 목록
@@ -232,24 +262,8 @@ const RegisterProduct = () => {
                                     <LabelExplain>상품의 사이즈 옵션을 추가합니다.</LabelExplain>
                                 </AddOptionRow>
                                 <AddOptionRow>
-                                    <Input  type="text" placeholder="이름" value={sizeOption.name}
-                                            onChange={(e) => {
-                                                const {value} = e.target;
-                                                setSizeOption({
-                                                    ...sizeOption,
-                                                    name: value
-                                                });
-                                            }}
-                                    />
-                                    <Input  type="number" placeholder="수량" value={sizeOption.amount}
-                                            onChange={(e) => {
-                                                const {value} = e.target;
-                                                setSizeOption({
-                                                    ...sizeOption,
-                                                    amount: value/1
-                                                })
-                                            }}
-                                    />
+                                    <Input type="text" placeholder="이름" value={sizeOption.name} name={SIZE_OPTION_NAME} onChange={updateSizeOptions}/>
+                                    <Input type="number" placeholder="수량" value={sizeOption.amount} name={SIZE_OPTION_AMOUNT} onChange={updateSizeOptions}/>
                                     <AddButton onClick={(e) => {
                                         const {option: optionFromNewProductObj} = newProductObj;
                                         const sizeOptions = optionFromNewProductObj.sizes;
