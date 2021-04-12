@@ -99,13 +99,43 @@ const UploadImageBox = styled.div`
     overflow: hidden;
 `;
 
+const UploadArea = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+`; 
+
+const ImageDeleteButtonBox = styled.div`
+    display: ${({url}) => url ? 'block' : 'none'};
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 2;
+`;
+const ImageDeleteButton = styled.button`
+    border: none;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border-radius: 5px;
+    opacity: 0.5;
+    cursor: pointer;
+    &:hover{
+        opacity: 1;
+    }
+`;
+const ImageDeleteIcon = styled.i``;
+
 const UploadImageTextBox = styled.div`
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
+    display: ${({url}) => url ? 'none' : 'flex'};
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -145,7 +175,6 @@ const PreviewImageContainer = styled.div`
     width: 100%;
     height: 100%;
     padding: 20px;
-    background: ${({url}) => url ? '#fff' : 'transparent'};
 `;
 
 const PreviewImage = styled.div`
@@ -238,6 +267,14 @@ const productImagesObj = {
         url: ''
     }
 }
+
+const uploadImages = [
+    {
+        key: "main",
+        title: "대표 이미지",
+        name: MAIN_IMAGE
+    }
+]
 
 
 
@@ -372,23 +409,39 @@ const RegisterProduct = () => {
                                     이미지를 선택하면, 선택한 이미지를 로드하여 PreviewImage 태그에 썸네일로 display한다. 
                                     추가적으로 구현해야할 기능: 이미지 드래그 앤 드롭
                                 */}
-                                <UploadImageBox id="mainProductImage" 
-                                    onClick={openFileSelector}>
-                                    <UploadImageTextBox>
-                                        <UploadImageText>
-                                            <UploadImageIcon className="fas fa-camera-retro"></UploadImageIcon>
-                                        </UploadImageText>
-                                        <UploadImageText type="title">대표 이미지</UploadImageText>
-                                        <UploadImageText type="content">이곳을 클릭 또는 이미지 파일을 드래그하세요.</UploadImageText>
-                                    </UploadImageTextBox>
-                                    <PreviewImageContainer url={productImages.main.url}>
-                                        <PreviewImage name={MAIN_IMAGE} url={productImages.main.url}></PreviewImage>
-                                    </PreviewImageContainer>
-                                    <InputImage type="file" ref={mainProductImage} name={MAIN_IMAGE} accept="image/*" onChange={updatePreviewImage}/>
-                                </UploadImageBox>
-
-                                <UploadImageBox></UploadImageBox>
-                                <UploadImageBox></UploadImageBox>
+                                {
+                                    uploadImages.map(({key:keyName, title, name}, idx) => 
+                                    <UploadImageBox key={`${keyName}${idx}`}>
+                                        <ImageDeleteButtonBox url={productImages[keyName].url}>
+                                            <ImageDeleteButton type="button" onClick={() => {
+                                                const main = {
+                                                    url: ''
+                                                }
+                                                setProductImages({
+                                                    ...productImages,
+                                                    main
+                                                });
+                                            }}>
+                                                <ImageDeleteIcon className="far fa-trash-alt"></ImageDeleteIcon>
+                                            </ImageDeleteButton>
+                                        </ImageDeleteButtonBox>
+                                        <UploadArea id="mainProductImage" 
+                                            onClick={openFileSelector}>       
+                                            <UploadImageTextBox url={productImages[keyName].url}>
+                                                <UploadImageText>
+                                                    <UploadImageIcon className="fas fa-camera-retro"></UploadImageIcon>
+                                                </UploadImageText>
+                                                <UploadImageText type="title">{title}</UploadImageText>
+                                                <UploadImageText type="content">이곳을 클릭 또는 이미지 파일을 드래그하세요.</UploadImageText>
+                                            </UploadImageTextBox>
+                                            <PreviewImageContainer>
+                                                <PreviewImage name={name} url={productImages[keyName].url}></PreviewImage>
+                                            </PreviewImageContainer>
+                                            <InputImage type="file" ref={mainProductImage} name={name} accept="image/*" onChange={updatePreviewImage}/>
+                                        </UploadArea>
+                                    </UploadImageBox>
+                                )
+                                }
                             </UploadImageWrapper>
                         </CardSection>
                         <CardSection>
