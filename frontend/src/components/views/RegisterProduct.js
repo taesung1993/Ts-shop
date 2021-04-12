@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import styled from "styled-components";
 import axios from "axios";
 import {colors} from "styles/config/colors"
@@ -27,7 +27,7 @@ const PageTitle = styled.span`
     padding-left: 20px;
 `;
 
-const Main = styled.main`
+const Main = styled.form`
     width: 70vw;
     padding-bottom: 50px;
     padding: 0 20px;
@@ -94,7 +94,34 @@ const UploadImageBox = styled.div`
     padding-bottom: 100%;
     border: 1px solid ${colors.lineColor};
     border-radius: 5px;
+    position: relative;
 `;
+
+const PreviewImageContainer = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+`;
+
+const PreviewImage = styled.div`
+    width: 100%;
+    height: 100%;
+    ${({name, url}) => {
+        if(name === MAIN_IMAGE){
+            return`
+                background-image: url(${url});
+                background-position: center center;
+                background-size: 80%;
+                background-origin: padding-box;
+                background-repeat: no-repeat;
+            `;
+        }
+    }}
+`;
+
 
 const AddOptionBox = styled.div`
     padding: 10px;
@@ -147,6 +174,13 @@ const newProductObject = {
     }
 };
 
+const InputImage = styled.input`
+    display: none;
+`;
+
+const EXPORTED_NAME = 'EXPORTED_NAME';
+const MAIN_IMAGE = 'MAIN_IMAGE';
+const PRODUCT_PRICE = 'PRODUCT_PRICE';
 const COLOR_OPTION_NAME = 'COLOR_OPTION_NAME';
 const COLOR_OPTION_AMOUNT = 'COLOR_OPTION_AMOUNT';
 const SIZE_OPTION_NAME = 'SIZE_OPTION_NAME';
@@ -156,13 +190,15 @@ const RegisterProduct = () => {
     const [newProductObj, updateNewProductObj] = useState(newProductObject);
     const [colorOption, setColorOption] = useState({name: '', amount: 0});
     const [sizeOption, setSizeOption] = useState({name: '', amount: 0});
+    const [previewMainImage, setPreviewMainImage] = useState(null);
+    const mainProductImage = useRef(null); 
 
     const inputExportedName = (e) => {
         /* 노출 상품명 입력처리하는 함수*/
-        const {value, name} = e.target;
+        const {value} = e.target;
         updateNewProductObj({
             ...newProductObj,
-            [name]: value
+            exportedName: value
         });
     }
     const updateColorOptions = (e) => {
@@ -239,17 +275,38 @@ const RegisterProduct = () => {
                     <PageTitle>상품 등록</PageTitle>
                 </TitleContainer>
             </Header>
-            <Main>
+            <Main onSubmit={(e) => {
+                e.preventDefault();
+                console.log("서브밋 버튼 입력!");
+            }}>
                 <MainCol>
                     <Card>
                         <CardSection>
                             <Label>노출 상품명</Label>
-                            <Input type="text" name="exportedName" onChange={inputExportedName}/>
+                            <Input type="text" name={EXPORTED_NAME} onChange={inputExportedName}/>
                         </CardSection>
                         <CardSection>
                             <Label>이미지 등록</Label>
                             <UploadImageWrapper>
-                                <UploadImageBox></UploadImageBox>
+                                <UploadImageBox id="mainProductImage" 
+                                onClick={(e) => {
+                                    const imageId = e.currentTarget.id;
+                                    mainProductImage.current.click(); //이미지 상자 클릭하면 file 타입을 가진 input 태그 클릭됌.
+                                }}>
+                                <PreviewImageContainer>
+                                    <PreviewImage name={MAIN_IMAGE} url={previewMainImage}></PreviewImage>
+                                </PreviewImageContainer>
+                                <InputImage type="file" ref={mainProductImage} name={MAIN_IMAGE} accept="image/*" onChange={(e) => {
+                                    const files = e.target.files[0];
+                                    const reader = new FileReader(); // 파일리더 생성자 생성
+                                    reader.readAsDataURL(files);
+                                    reader.onloadend = () => {
+                                        console.log("파일 리더 결과 생성!");
+                                        console.log(reader.result);
+                                        setPreviewMainImage(reader.result);
+                                    }
+                                }}/>
+                                </UploadImageBox>
                                 <UploadImageBox></UploadImageBox>
                                 <UploadImageBox></UploadImageBox>
                             </UploadImageWrapper>
@@ -313,29 +370,12 @@ const RegisterProduct = () => {
                         <Title>상품 가격</Title>
                         <CardSection>
                             <Label>기본 가격</Label>
-                            <Input type="number"/>
+                            <Input type="number" name={PRODUCT_PRICE}/>
                         </CardSection>
                     </Card>
                     <ButtonContainer>
                         <Button>미리보기</Button>
-                        <Button onClick={
-                            async () => {
-                                try{
-                                    const {data: {error}} = await axios.post('/api/register-product', {
-                                        success: false,
-                                        test: {
-                                            num: 1
-                                        }
-                                    });
-                                    if(error){
-                                        throw new Error("에러 발생!"); 
-                                    }
-                                }
-                                catch(error){
-                                    console.log(error.message);
-                                }
-                            }
-                        }>등록하기</Button>
+                        <Button type="submit">등록하기</Button>
                     </ButtonContainer>
                 </MainCol>
             </Main>
