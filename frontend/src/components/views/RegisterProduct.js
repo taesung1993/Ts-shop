@@ -95,6 +95,47 @@ const UploadImageBox = styled.div`
     border: 1px solid ${colors.lineColor};
     border-radius: 5px;
     position: relative;
+    cursor: pointer;
+    overflow: hidden;
+`;
+
+const UploadImageTextBox = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+const UploadImageText = styled.span`
+    ${
+        ({type}) => {
+            switch(type){
+                case 'title':
+                    return `
+                        font-size: 1.5rem;
+                        font-weight: 600;
+                        margin-top: 25px;
+                        margin-bottom: 5px;
+                        opacity: 0.8;
+                    `;
+                case 'content':
+                    return `
+                        font-size: 1.2rem;
+                        opacity: 0.5;
+                        padding: 0 25px;
+                        text-align: center;
+                    `;
+            }
+        }
+    }
+`;
+const UploadImageIcon = styled.i`
+    transform: scale(3);
+    opacity: 0.8;
 `;
 
 const PreviewImageContainer = styled.div`
@@ -104,6 +145,7 @@ const PreviewImageContainer = styled.div`
     width: 100%;
     height: 100%;
     padding: 20px;
+    background: ${({url}) => url ? '#fff' : 'transparent'};
 `;
 
 const PreviewImage = styled.div`
@@ -164,16 +206,6 @@ const Button = styled.button`
     cursor: pointer;
 `;
 
-const newProductObject = {
-    exportedName: '',
-    mainImage: '',
-    restImages: null,
-    option:{
-        sizes: [],
-        colors: []
-    }
-};
-
 const InputImage = styled.input`
     display: none;
 `;
@@ -186,11 +218,34 @@ const COLOR_OPTION_AMOUNT = 'COLOR_OPTION_AMOUNT';
 const SIZE_OPTION_NAME = 'SIZE_OPTION_NAME';
 const SIZE_OPTION_AMOUNT = 'SIZE_OPTION_AMOUNT';
 
+const newProductObject = {
+    exportedName: '',
+    mainImage: '',
+    restImages: null,
+    option:{
+        sizes: [],
+        colors: []
+    }
+};
+const productImagesObj = {
+    main: {
+        url: ''
+    },
+    sub1: {
+        url: ''
+    },
+    sub2: {
+        url: ''
+    }
+}
+
+
+
 const RegisterProduct = () => {
     const [newProductObj, updateNewProductObj] = useState(newProductObject);
     const [colorOption, setColorOption] = useState({name: '', amount: 0});
     const [sizeOption, setSizeOption] = useState({name: '', amount: 0});
-    const [previewMainImage, setPreviewMainImage] = useState(null);
+    const [productImages, setProductImages] = useState(productImagesObj);
     const mainProductImage = useRef(null); 
 
     const inputExportedName = (e) => {
@@ -274,9 +329,20 @@ const RegisterProduct = () => {
     const updatePreviewImage = (e) => {
         const files = e.target.files[0];
         const reader = new FileReader(); // 파일리더 생성자 생성
-        reader.readAsDataURL(files);
-        reader.onloadend = () => {
-            setPreviewMainImage(reader.result);
+        const isFiles = () => files ? true : false;
+
+        if(isFiles()){
+            /* 파일이 존재할 경우에만 썸네일을 업데이트한다. */
+            reader.readAsDataURL(files);
+            reader.onloadend = () => {
+                const main = {
+                    url: reader.result
+                }
+                setProductImages({
+                    ...productImages,
+                    main
+                });
+            }
         }
     }
 
@@ -308,8 +374,15 @@ const RegisterProduct = () => {
                                 */}
                                 <UploadImageBox id="mainProductImage" 
                                     onClick={openFileSelector}>
-                                    <PreviewImageContainer>
-                                        <PreviewImage name={MAIN_IMAGE} url={previewMainImage}></PreviewImage>
+                                    <UploadImageTextBox>
+                                        <UploadImageText>
+                                            <UploadImageIcon className="fas fa-camera-retro"></UploadImageIcon>
+                                        </UploadImageText>
+                                        <UploadImageText type="title">대표 이미지</UploadImageText>
+                                        <UploadImageText type="content">이곳을 클릭 또는 이미지 파일을 드래그하세요.</UploadImageText>
+                                    </UploadImageTextBox>
+                                    <PreviewImageContainer url={productImages.main.url}>
+                                        <PreviewImage name={MAIN_IMAGE} url={productImages.main.url}></PreviewImage>
                                     </PreviewImageContainer>
                                     <InputImage type="file" ref={mainProductImage} name={MAIN_IMAGE} accept="image/*" onChange={updatePreviewImage}/>
                                 </UploadImageBox>
