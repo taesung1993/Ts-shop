@@ -267,6 +267,19 @@ const RegisterProduct = () => {
         setSizeOption({name: '', amount: 0});
     }
 
+    const openFileSelector = (e) => {
+        const imageId = e.currentTarget.id;
+        mainProductImage.current.click(); //이미지 상자 클릭하면 file 타입을 가진 input 태그 클릭됌.
+    }
+    const updatePreviewImage = (e) => {
+        const files = e.target.files[0];
+        const reader = new FileReader(); // 파일리더 생성자 생성
+        reader.readAsDataURL(files);
+        reader.onloadend = () => {
+            setPreviewMainImage(reader.result);
+        }
+    }
+
 
     return (
         <Container>
@@ -288,25 +301,19 @@ const RegisterProduct = () => {
                         <CardSection>
                             <Label>이미지 등록</Label>
                             <UploadImageWrapper>
+                                {/* 
+                                    UploadImageBox: 클릭하면 file 타입의 input이 열릴 수 있게 창을 열어 이미지를 선택할 수 있다.
+                                    이미지를 선택하면, 선택한 이미지를 로드하여 PreviewImage 태그에 썸네일로 display한다. 
+                                    추가적으로 구현해야할 기능: 이미지 드래그 앤 드롭
+                                */}
                                 <UploadImageBox id="mainProductImage" 
-                                onClick={(e) => {
-                                    const imageId = e.currentTarget.id;
-                                    mainProductImage.current.click(); //이미지 상자 클릭하면 file 타입을 가진 input 태그 클릭됌.
-                                }}>
-                                <PreviewImageContainer>
-                                    <PreviewImage name={MAIN_IMAGE} url={previewMainImage}></PreviewImage>
-                                </PreviewImageContainer>
-                                <InputImage type="file" ref={mainProductImage} name={MAIN_IMAGE} accept="image/*" onChange={(e) => {
-                                    const files = e.target.files[0];
-                                    const reader = new FileReader(); // 파일리더 생성자 생성
-                                    reader.readAsDataURL(files);
-                                    reader.onloadend = () => {
-                                        console.log("파일 리더 결과 생성!");
-                                        console.log(reader.result);
-                                        setPreviewMainImage(reader.result);
-                                    }
-                                }}/>
+                                    onClick={openFileSelector}>
+                                    <PreviewImageContainer>
+                                        <PreviewImage name={MAIN_IMAGE} url={previewMainImage}></PreviewImage>
+                                    </PreviewImageContainer>
+                                    <InputImage type="file" ref={mainProductImage} name={MAIN_IMAGE} accept="image/*" onChange={updatePreviewImage}/>
                                 </UploadImageBox>
+
                                 <UploadImageBox></UploadImageBox>
                                 <UploadImageBox></UploadImageBox>
                             </UploadImageWrapper>
